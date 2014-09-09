@@ -4,6 +4,10 @@ body {
   color: #FFFFFF;
 }
 
+input{
+  color: black;
+}
+
 a,
 a:visited {
   color: #FFFFFF;
