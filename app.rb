@@ -85,3 +85,14 @@ get '/meetups/:id' do
 @meetup = Meetup.find(params[:id])
 erb :'meetups/show'
 end
+
+post '/meetups/:id' do
+@meetup = Meetup.find(params[:id])
+@member = Members.new(user_id: current_user.id, role: "member", meetup_id: @meetup.id )
+@member.save
+end
+
+
+
+
+
