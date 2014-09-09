@@ -71,14 +71,13 @@ end
 
 
 post '/meetups/new' do
-@meetup = Meetup.new(params[:meetup])
-@meetup.save
+  @meetup = Meetup.new(params[:meetup])
   if @meetup.save == false
     flash[:notice] = "Please fill out all forms!"
     redirect '/meetups/new'
   else
-  flash[:notice] = "You have successfully created a meetup"
-  redirect '/meetups/#{@meetup.id}'
+    flash[:notice] = "You have successfully created a meetup"
+    redirect "/meetups/#{@meetup.id}"
   end
 end
 
