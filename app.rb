@@ -88,8 +88,15 @@ end
 
 post '/meetups/:id' do
 @meetup = Meetup.find(params[:id])
-@member = Members.new(user_id: current_user.id, role: "member", meetup_id: @meetup.id )
-@member.save
+if signed_in? == false
+    flash[:notice] = "Please sign in to join a meetup"
+    redirect '/'
+else
+  @member = Members.new(user_id: current_user.id, role: "member", meetup_id: @meetup.id )
+  @member.save
+  flash[:notice] = "You have successfully became a member of this group!"
+  redirect "/meetups/#{@meetup.id}"
+end
 end
 
 
