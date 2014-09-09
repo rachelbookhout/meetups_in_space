@@ -57,22 +57,32 @@ end
 
 
 get'/meetups' do
-  @meetups = Meetup.all
- erb :'meetups/index'
+  @meetups = Meetup.all.order(name: :asc)
+  erb :'meetups/index'
 end
 
 get '/meetups/new' do
+  if signed_in? ==false
+    flash[:notice] = "Please sign in to add a meetup"
+    redirect '/'
+  end
 erb :'meetups/new'
 end
+
 
 post '/meetups/new' do
 @meetup = Meetup.new(params[:meetup])
 @meetup.save
-flash[:notice] = "You have successfully created a meetup!"
-redirect '/meetups'
+  if @meetup.save == false
+    flash[:notice] = "Please fill out all forms!"
+    redirect '/meetups/new'
+  else
+  flash[:notice] = "You have successfully created a meetup"
+  redirect '/meetups/#{@meetup.id}'
+  end
 end
 
 get '/meetups/:id' do
-  @meetup = Meetup.find(params[:id])
+@meetup = Meetup.find(params[:id])
 erb :'meetups/show'
 end
