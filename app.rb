@@ -83,6 +83,7 @@ end
 
 get '/meetups/:id' do
 @meetup = Meetup.find(params[:id])
+@members = Members.where(meetup_id: "#{@meetup.id}")
 erb :'meetups/show'
 end
 
